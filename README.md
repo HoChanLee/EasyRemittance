@@ -2,6 +2,10 @@
 
 편하게 계좌송금 할 수 있는 서비스 입니다.
 
+## ERD
+<img width="859" alt="image" src="https://github.com/HoChanLee/EasyRemittance/assets/106670454/f0b7b7e9-ed69-4450-8f0b-34ec2f283d6b">
+
+
 ## 프로젝트 기능 및 설계
 - 회원가입 기능
   - 사용자는 회원가입을 할 수 있다. 일반적으로 모든 사용자는 회원가입시 USER 권한 (일반 권한)을 지닌다. 
