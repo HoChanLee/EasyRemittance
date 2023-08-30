@@ -2,7 +2,7 @@
 편하게 계좌송금 할 수 있는 서비스 입니다.
 
 ## ERD
-<img width="927" alt="image" src="https://github.com/HoChanLee/EasyRemittance/assets/106670454/d4e62168-8aa5-4e37-bc3e-c9ec5fde62e4">
+<img width="926" alt="image" src="https://github.com/HoChanLee/EasyRemittance/assets/106670454/5940acb0-aaaa-45c1-ade4-1b65fc437a50">
 
 
 ## 기술 스택
