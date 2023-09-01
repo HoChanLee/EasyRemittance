@@ -1,10 +1,12 @@
 # 쉬운 송금 서비스
-
 편하게 계좌송금 할 수 있는 서비스 입니다.
 
 ## ERD
-<img width="859" alt="image" src="https://github.com/HoChanLee/EasyRemittance/assets/106670454/f0b7b7e9-ed69-4450-8f0b-34ec2f283d6b">
+<img width="926" alt="image" src="https://github.com/HoChanLee/EasyRemittance/assets/106670454/5940acb0-aaaa-45c1-ade4-1b65fc437a50">
 
+
+## 기술 스택
+Java, Spring boot, JPA, Spring Security, JWT, MySQL, Redis
 
 ## 프로젝트 기능 및 설계
 - 회원가입 기능
