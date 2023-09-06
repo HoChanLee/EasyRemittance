@@ -21,7 +21,7 @@ public class AccountService {
 
     //계좌 추가
     @Transactional
-    public Account regiAccount(AccountDto accountDto){
+    public Account regiAccount(AccountDto.regiAccount accountDto){
         boolean isUserId = userRepository.existsById(accountDto.getUserId());
         if(!isUserId){
             throw new RuntimeException("없는 user 입니다.");
@@ -39,5 +39,15 @@ public class AccountService {
 
         Account save = accountRepository.save(entity);
         return save;
+    }
+
+    @Transactional
+    public void chargeAmount(AccountDto.chargeAmount accountDto){
+        Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
+                .orElseThrow(() -> new RuntimeException("계좌 id확인"));
+
+        account.setBalance(accountDto.getBalance());
+        account.setUpdatedAt(LocalDateTime.now());
+        accountRepository.save(account);
     }
 }

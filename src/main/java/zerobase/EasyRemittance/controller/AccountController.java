@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import zerobase.EasyRemittance.domain.Account;
 import zerobase.EasyRemittance.dto.AccountDto;
 import zerobase.EasyRemittance.service.AccountService;
@@ -26,9 +23,17 @@ public class AccountController {
      * @return
      */
     @PostMapping("/registration")
-    @PreAuthorize("hasRole('USER')")
-    public Account regiAccount(@RequestBody @Validated AccountDto accountDto){
+    public Account regiAccount(@RequestBody @Validated AccountDto.regiAccount accountDto){
         Account result = accountService.regiAccount(accountDto);
         return result;
+    }
+
+    /**
+     * 금액충전
+     * @param accountDto
+     */
+    @PatchMapping("/charge")
+    public void chargeAmount(@RequestBody AccountDto.chargeAmount accountDto){
+        accountService.chargeAmount(accountDto);
     }
 }

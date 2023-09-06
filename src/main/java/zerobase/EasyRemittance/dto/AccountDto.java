@@ -2,10 +2,17 @@ package zerobase.EasyRemittance.dto;
 
 import lombok.*;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AccountDto {
-    private String accountNumber;
-    private long userId;
+
+    @Data
+    public static class regiAccount {
+        private String accountNumber;
+        private long userId;
+    }
+
+    @Data
+    public static class chargeAmount {
+        private String accountNumber;
+        private long balance;
+    }
 }
