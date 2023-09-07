@@ -2,7 +2,6 @@ package zerobase.EasyRemittance.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import zerobase.EasyRemittance.domain.Account;
@@ -26,6 +25,11 @@ public class AccountController {
     public Account regiAccount(@RequestBody @Validated AccountDto.regiAccount accountDto){
         Account result = accountService.regiAccount(accountDto);
         return result;
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteAccount(@RequestBody @Validated AccountDto.deleteAccount accountDto){
+        accountService.deleteAccount(accountDto);
     }
 
     /**

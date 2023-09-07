@@ -8,6 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findById(long id);
+
     Optional<User> findByUserId(String userId);
 
     boolean existsByUserId(String userId); //회원 이름 중복 확인

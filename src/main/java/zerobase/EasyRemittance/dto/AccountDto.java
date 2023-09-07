@@ -11,6 +11,12 @@ public class AccountDto {
     }
 
     @Data
+    public static class deleteAccount {
+        private String accountNumber;
+        private String password;
+    }
+
+    @Data
     public static class chargeAmount {
         private String accountNumber;
         private long balance;

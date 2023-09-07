@@ -1,6 +1,8 @@
 package zerobase.EasyRemittance.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import zerobase.EasyRemittance.domain.Account;
+import zerobase.EasyRemittance.domain.User;
 import zerobase.EasyRemittance.dto.AccountDto;
 import zerobase.EasyRemittance.repository.AccountRepository;
 import zerobase.EasyRemittance.repository.UserRepository;
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //계좌 추가
     @Transactional
@@ -41,10 +44,26 @@ public class AccountService {
         return save;
     }
 
+    //계좌삭제
+    @Transactional
+    public void deleteAccount(AccountDto.deleteAccount accountDto){
+        Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
+                .orElseThrow(() -> new RuntimeException("계좌 번호확인"));
+
+        User user = userRepository.findById(account.getUserId()).get();
+
+        //password 확인
+        if(!user.getPassword().equals(user.getPassword())){
+            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
+        }
+
+        accountRepository.deleteById(account.getAccountNumber());
+    }
+
     @Transactional
     public void chargeAmount(AccountDto.chargeAmount accountDto){
         Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
-                .orElseThrow(() -> new RuntimeException("계좌 id확인"));
+                .orElseThrow(() -> new RuntimeException("계좌 번호확인"));
 
         account.setBalance(accountDto.getBalance());
         account.setUpdatedAt(LocalDateTime.now());
