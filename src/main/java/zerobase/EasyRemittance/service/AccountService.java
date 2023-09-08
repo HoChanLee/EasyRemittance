@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import zerobase.EasyRemittance.type.AccountStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,7 +22,6 @@ import java.time.LocalDateTime;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
     //계좌 추가
     @Transactional
@@ -44,7 +45,27 @@ public class AccountService {
         return save;
     }
 
-    //계좌삭제
+    //계좌 확인
+    @Transactional
+    public List<Account> getAccounts(long userId){
+        List<Account> accounts = accountRepository.findByUserId(userId).stream()
+                .map(account ->
+                        Account.builder()
+                                .accountNumber(account.getAccountNumber())
+                                .userId(account.getUserId())
+                                .balance(account.getBalance())
+                                .accountStatus(account.getAccountStatus())
+                                .registered(account.getRegistered())
+                                .unregistered(account.getUnregistered())
+                                .createdAt(account.getCreatedAt())
+                                .updatedAt(account.getUpdatedAt())
+                                .build()
+                )
+                .collect(Collectors.toList());
+        return accounts;
+    }
+
+    //계좌 삭제
     @Transactional
     public void deleteAccount(AccountDto.deleteAccount accountDto){
         Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
@@ -52,7 +73,7 @@ public class AccountService {
 
         User user = userRepository.findById(account.getUserId()).get();
 
-        //password 확인
+        //password
         if(!user.getPassword().equals(user.getPassword())){
             throw new RuntimeException("비밀번호가 일치하지 않습니다.");
         }
@@ -60,12 +81,14 @@ public class AccountService {
         accountRepository.deleteById(account.getAccountNumber());
     }
 
+    //금액 충전
     @Transactional
     public void chargeAmount(AccountDto.chargeAmount accountDto){
         Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
                 .orElseThrow(() -> new RuntimeException("계좌 번호확인"));
 
-        account.setBalance(accountDto.getBalance());
+        long balance = account.getBalance() + accountDto.getBalance();
+        account.setBalance(balance);
         account.setUpdatedAt(LocalDateTime.now());
         accountRepository.save(account);
     }

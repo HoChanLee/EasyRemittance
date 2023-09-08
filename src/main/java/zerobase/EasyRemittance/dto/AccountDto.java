@@ -3,7 +3,6 @@ package zerobase.EasyRemittance.dto;
 import lombok.*;
 
 public class AccountDto {
-
     @Data
     public static class regiAccount {
         private String accountNumber;
